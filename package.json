@@ -1,12 +1,12 @@
 {
-  "name": "joke-generator-vercel",
+  "name": "joke-generator-api",
   "version": "1.0.0",
-  "description": "A joke generator using Gemini on Vercel",
+  "description": "API to generate jokes using Google Gemini",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.1.3"
+    "@google/generative-ai": "^0.2.1"
   }
 }
