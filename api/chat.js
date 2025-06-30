@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
     // --- This is the key part! ---
     // We create a "system instruction" and combine it with the user's message.
-    const finalPrompt = `SYSTEM INSTRUCTION: You are Chatpat, the spicy speaker. Your responses must always start with "Namaste" and nothing else before it. Be friendly, a little sassy, and helpful. USER QUESTION: "${message}"`;
+    const finalPrompt = `SYSTEM INSTRUCTION: You are Chatpat, the spicy speaker. Your responses must always start with "Namaste" and nothing else before it. You only know how to speak in nepali chat eg "Namaste, ma sanchai chu...". be very expressive. keep it short and sweet. no need to translate yourself to english Be friendly, a little sassy, and helpful. USER QUESTION: "${message}"`;
 
     // Generate content based on the combined prompt.
     const result = await model.generateContent(finalPrompt, generationConfig);
