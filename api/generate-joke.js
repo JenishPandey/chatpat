@@ -1,33 +1,42 @@
-// This is our backend file. It is a "serverless function".
-// It runs on Vercel's servers, not in the user's browser.
+// UPDATED BACKEND CODE for api/generate-joke.js
 
 // Import the Google AI library
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // This is the main function that will be executed when someone visits our API endpoint
 export default async function handler(req, res) {
+  // Use a try-catch block to handle potential errors gracefully
   try {
-    // We get the API key from an environment variable.
-    // This is a secure way to store the key. We will set this up in Vercel later.
+    // 1. A-C-C-E-S-S   T-H-E   A-P-I   K-E-Y
+    // We get the API key from Vercel's Environment Variables.
+    // This is the most secure way to handle secret keys.
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
-    // Specify the model we want to use
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    // 2. S-E-L-E-C-T   T-H-E   M-O-D-E-L
+    // We are now using 'gemini-1.5-flash', which is fast and optimized for the free tier.
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    // The prompt is our instruction to the AI
-    const prompt = "Tell me a short, clean, one-liner joke. It should be suitable for all audiences. For example: Why don't scientists trust atoms? Because they make up everything!";
+    // 3. C-R-A-F-T   T-H-E   P-R-O-M-P-T
+    // The prompt is our instruction to the AI.
+    const prompt = "Tell me a short, clean, one-liner programmer joke. It should be suitable for all audiences.";
 
-    // Ask the AI to generate content based on our prompt
+    // 4. G-E-N-E-R-A-T-E   T-H-E   J-O-K-E
+    // Ask the AI to generate content based on our prompt.
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const jokeText = response.text();
 
-    // Send the generated joke back to the frontend as a JSON object
+    // 5. S-E-N-D   T-H-E   R-E-S-P-O-N-S-E
+    // Send the generated joke back to the frontend as a JSON object with a 200 OK status.
     res.status(200).json({ joke: jokeText });
 
   } catch (error) {
-    // If something goes wrong, log the error and send a 500 status code
-    console.error(error);
+    // 6. H-A-N-D-L-E   E-R-R-O-R-S
+    // If anything in the 'try' block fails, this code will run.
+    // We log the detailed error to the Vercel server logs for debugging.
+    console.error("Error in generate-joke API:", error);
+
+    // We send a generic, user-friendly error message back to the frontend.
     res.status(500).json({ error: "Failed to generate joke. Please check the server logs." });
   }
 }
